@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODIVA - چێشتخانە و کافێ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Kurdish-specific styles */
+        body, .font-kurdish {
+            font-family: 'Noto Sans Arabic', 'Inter', sans-serif;
+        }
+        
+        /* RTL adjustments */
+        .categories-grid {
+            direction: ltr; /* Keep category navigation LTR for consistency */
+        }
+        
+        .menu-item-card .item-name,
+        .menu-item-card .item-price {
+            text-align: right;
+        }
+        
+        .modal-details {
+            text-align: right;
+        }
+        
+        .contact-item {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+        
+        .contact-item i {
+            margin-left: 1rem;
+            margin-right: 0;
+        }
+        
+        .info-content {
+            text-align: right;
+        }
+        
+        .social-link-mobile {
+            flex-direction: row-reverse;
+        }
+        
+        .social-link-mobile i {
+            margin-right: 0;
+            margin-left: 0.75rem;
+        }
+        
+        .back-btn {
+            flex-direction: row-reverse;
+        }
+        
+        @media (max-width: 480px) {
+            .social-link-mobile {
+                flex-direction: row-reverse;
+                justify-content: flex-end;
+            }
+            
+            .social-link-mobile i {
+                margin-left: 0.75rem;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased font-kurdish">
+    <!-- Language Selection Screen -->
+    <div class="language-selection-screen" id="languageSelectionScreen">
+        <div class="language-selector-content">
+            <div class="logo-area">
+                <h1 class="restaurant-name font-playfair">CODIVA</h1>
+                <p class="restaurant-tagline">چێشتخانە و کافێ</p>
+            </div>
+
+            <div class="language-dropdown-container" >
+                <label class="language-dropdown-label">زمانەکەت هەڵبژێرە</label>
+                <button class="language-dropdown" id="languageSelectBtn">
+                    <span id="selectedLanguageText">زمان هەڵبژێرە</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <div class="restaurant-info">
+                <div class="info-grid">
+                    <div class="info-card full-width" >
+                        <div class="info-icon-wrapper">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">پەیوەندیمان پێوە بکە</span>
+                            <a href="tel:+9647507507650999" class="info-value phone-link" target="_blank">
+                                +964 750 765 0999
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card full-width" >
+                        <div class="info-icon-wrapper">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">کاتی کارکردن</span>
+                            <span class="info-value">١١:٠٠ بەیانی - ١٢:٠٠ شەو</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card full-width" >
+                        <div class="info-icon-wrapper">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">سەردانمان بکە</span>
+                            <span class="info-value">ناوەندی شاری هەولێر، کوردستان</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/share/1BwN7FePRR/?mibextid=wwXIfr" class="social-link" title="Facebook" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/codiva.co?igsh=MWFtYWpobThsZ2Zydg%3D%3D&utm_source=qr" class="social-link" title="Instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/9647507650999" class="social-link" title="WhatsApp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/codiva-co/" class="social-link" title="linkedin" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Selection Popup -->
+    <div class="language-popup-overlay" id="languagePopupOverlay">
+        <div class="language-popup">
+            <div class="language-popup-header">
+                <h3>زمان هەڵبژێرە</h3>
+                <button class="language-popup-close" id="languagePopupClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="language-options">
+                <button class="language-option" data-lang="en" data-text="English">
+                    <div class="language-details">
+                        <span class="language-name">English</span>
+                    </div>
+                    <i class="fas fa-check language-check"></i>
+                </button>
+                <button class="language-option selected" data-lang="ku" data-text="کوردی">
+                    <div class="language-details">
+                        <span class="language-name">کوردی</span>
+                    </div>
+                    <i class="fas fa-check language-check"></i>
+                </button>
+                <button class="language-option" data-lang="ar" data-text="العربية">
+                    <div class="language-details">
+                        <span class="language-name">العربية</span>
+                    </div>
+                    <i class="fas fa-check language-check"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header class="glass-dark py-6 fixed w-full top-0 z-50 shadow-lg">
+        <div class="header-container flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold font-playfair hero-title">CODIVA</a>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Language Selector -->
+                <div class="lang-switcher hidden md:flex">
+                    <button class="navbar-language-dropdown" id="navbarLanguageBtn">
+                        <span id="navbarSelectedLanguage">کو</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                
+                <button id="mobile-menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="mobile-overlay hidden">
+        <div class="mobile-menu-content">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold font-playfair text-gray-800 mb-2">CODIVA</h2>
+                <p class="text-gray-600">چێشتخانە و کافێ</p>
+            </div>
+
+            <div class="lang-switcher mb-8 grid" >
+                <label class="text-gray-700 font-semibold mb-3 block">زمان هەڵبژێرە</label>
+                <button class="navbar-language-dropdown mobile" id="mobileLanguageBtn">
+                    <span id="mobileSelectedLanguage">کوردی</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <div class="contact-section mb-8" dir="ltr" >
+                <div class="contact-item mb-4" >
+                    <a href="tel:+9647507650999" class="text-gray-700 font-semibold text-lg hover:text-gray-600 transition-colors">
+                        +964 750 765 0999
+                        <i class="fas fa-phone text-green-600 text-xl mr-3"></i>
+                    </a>
+                </div>
+                <div class="contact-item mb-4">
+                    <span class="text-gray-700">ڕۆژانە: ١١:٠٠ بەیانی - ١٢:٠٠ شەو                     <i class="fas fa-clock text-green-600 text-xl mr-3"></i>
+</span>                </div>
+                <div class="contact-item">
+                    <span class="text-gray-700">ناوەندی شاری هەولێر، کوردستان  <i class="fas fa-map-marker-alt text-green-600 text-xl mr-3"></i></span>
+                   
+                </div>
+            </div>
+
+            <div class="social-section">
+                <h3 class="text-gray-800 font-semibold mb-4 text-center">شوێنمان بکەوە</h3>
+                <div class="social-links-mobile">
+                    <a href="https://www.facebook.com/share/1BwN7FePRR/?mibextid=wwXIfr" class="social-link-mobile" target="_blank" >
+                        <span>فەیسبووک</span>
+                        <i class="fab fa-facebook-f" ></i>
+                    </a>
+                    <a href="https://www.instagram.com/codiva.co?igsh=MWFtYWpobThsZ2Zydg%3D%3D&utm_source=qr" class="social-link-mobile" target="_blank" >
+                        <span>ئینستاگرام</span>
+                        <i class="fab fa-instagram" ></i>
+                    </a>
+                    <a href="https://wa.me/9647507650999" class="social-link-mobile" target="_blank" >
+                        <span>واتساپ</span>
+                        <i class="fab fa-whatsapp" ></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/codiva-co/" class="social-link-mobile" target="_blank" >
+                        <span>لینکدین</span>
+                        <i class="fab fa-linkedin" ></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Navigation -->
+    <div class="category-navigation-section">
+        <div class="categories-container">
+            <div class="categories-grid">
+                <button class="category-nav-button" data-target="coldAppetizers">
+                    <div class="category-image-container">
+                        <img src="/img/cold/breackfast.jpg" alt="تەماشای بەیانی" class="category-image">
+                    </div>
+                    <span class="category-name">تەماشای بەیانی</span>
+                </button>
+                <button class="category-nav-button" data-target="appetizers">
+                    <div class="category-image-container">
+                        <img src="/img/salads/greek-salad.jpg" alt="زەڵاتە" class="category-image">
+                    </div>
+                    <span class="category-name">زەڵاتە</span>
+                </button>
+                
+                <button class="category-nav-button" data-target="mainCourses">
+                    <div class="category-image-container">
+                        <img src="/img/hotsandwich/hot1.jpg" alt="سەندویچ" class="category-image">
+                    </div>
+                    <span class="category-name">سەندویچ</span>
+                </button>
+                
+                <button class="category-nav-button" data-target="desserts">
+                    <div class="category-image-container">
+                        <img src="/img/desserts/tiramisu.jpg" alt="شیرینی" class="category-image">
+                    </div>
+                    <span class="category-name">شیرینی</span>
+                </button>
+                
+                <button class="category-nav-button" data-target="beverages">
+                    <div class="category-image-container">
+                        <img src="/img/coffee/cappuccino.jpg" alt="قاوە" class="category-image">
+                    </div>
+                    <span class="category-name">قاوە</span>
+                </button>
+                
+                <button class="category-nav-button" data-target="drinks">
+                    <div class="category-image-container">
+                        <img src="/img/drinks/orange.jpg" alt="خواردنەوە" class="category-image">
+                    </div>
+                    <span class="category-name">خواردنەوە</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-32 pb-16" >
+        <div class="container-full">
+            <div class="menu-container">
+                <section id="coldAppetizers" class="menu-section">
+                    <div class="section-header">
+                        <h2>تەماشای بەیانی</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+                <section id="appetizers" class="menu-section">
+                    <div class="section-header">
+                        <h2>زەڵاتە</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+                
+                <section id="mainCourses" class="menu-section">
+                    <div class="section-header">
+                        <h2>سەندویچ</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+
+                <section id="desserts" class="menu-section">
+                    <div class="section-header">
+                        <h2>شیرینی</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+
+                <section id="beverages" class="menu-section">
+                    <div class="section-header">
+                        <h2>قاوە</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+                
+                <section id="drinks" class="menu-section">
+                    <div class="section-header">
+                        <h2>خواردنەوە</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="glass-dark py-8" dir="ltr">
+        <div class="header-container text-center">
+            <p >&copy; ٢٠٢٥ <a href="https://codiva.co" target="_blank" style="border-bottom: 1px; color: blue;">codiva</a>. هەموو مافەکان پارێزراون.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://www.facebook.com/share/1BwN7FePRR/?mibextid=wwXIfr" class="hover:transition-colors duration-300" target="_blank">
+                    <i class="fab fa-facebook text-2xl"></i>
+                </a>
+                <a href="https://www.instagram.com/codiva.co?igsh=MWFtYWpobThsZ2Zydg%3D%3D&utm_source=qr" class="hover: transition-colors duration-300" target="_blank">
+                    <i class="fab fa-instagram text-2xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/codiva-co/" class="hover: transition-colors duration-300" target="_blank">
+                    <i class="fab fa-linkedin text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="foodModal" class="food-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-image-container">
+                <img id="modalImage" src="" alt="" class="modal-image">
+            </div>
+            <div class="modal-details">
+                <h2 id="modalTitle" class="modal-title"></h2>
+                <p id="modalDescription" class="modal-description"></p>
+                <div class="modal-price-container">
+                    <span id="modalPrice" class="modal-price"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

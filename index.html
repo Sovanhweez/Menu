@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODIVA - Rest & Cafe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased">
+    <!-- Language Selection Screen -->
+    <div class="language-selection-screen" id="languageSelectionScreen">
+        <div class="language-selector-content">
+            <div class="logo-area">
+                <h1 class="restaurant-name font-playfair">CODIVA</h1>
+                <p class="restaurant-tagline">Rest & Cafe</p>
+            </div>
+
+            <div class="language-dropdown-container">
+                <label class="language-dropdown-label">Choose Your Language</label>
+                <button class="language-dropdown" id="languageSelectBtn">
+                    <span id="selectedLanguageText">Select Language</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <div class="restaurant-info">
+                <div class="info-grid">
+                    <div class="info-card full-width">
+                        <div class="info-icon-wrapper">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Call Us</span>
+                            <a href="tel:+9647507507650999" class="info-value phone-link" target="_blank">
+                                +964 750 765 0999
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card full-width">
+                        <div class="info-icon-wrapper">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Open Hours</span>
+                            <span class="info-value">11:00 AM - 12:00 PM</span>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card full-width">
+                        <div class="info-icon-wrapper">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Visit Us</span>
+                            <span class="info-value">Erbil City Center, Kurdistan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/share/1BwN7FePRR/?mibextid=wwXIfr" class="social-link" title="Facebook" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/codiva.co?igsh=MWFtYWpobThsZ2Zydg%3D%3D&utm_source=qr" class="social-link" title="Instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/9647507650999" class="social-link" title="WhatsApp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/codiva-co/" class="social-link" title="linkedin" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Selection Popup -->
+    <div class="language-popup-overlay" id="languagePopupOverlay">
+        <div class="language-popup">
+            <div class="language-popup-header">
+                <h3>Select Language</h3>
+                <button class="language-popup-close" id="languagePopupClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="language-options">
+                <button class="language-option selected" data-lang="en" data-text="English">
+                    <div class="language-details">
+                        <span class="language-name">English</span>
+                    </div>
+                    <i class="fas fa-check language-check"></i>
+                </button>
+                <button class="language-option" data-lang="ku" data-text="Kurdish">
+                    <div class="language-details">
+                        <span class="language-name">Kurdish</span>
+                    </div>
+                    <i class="fas fa-check language-check"></i>
+                </button>
+                <button class="language-option" data-lang="ar" data-text="Arabic">
+                    <div class="language-details">
+                        <span class="language-name">Arabic</span>
+                    </div>
+                    <i class="fas fa-check language-check"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header class="glass-dark py-6 fixed w-full top-0 z-50 shadow-lg">
+        <div class="header-container flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold font-playfair hero-title">CODIVA</a>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Language Selector -->
+                <div class="lang-switcher hidden md:flex">
+                    <button class="navbar-language-dropdown" id="navbarLanguageBtn">
+                        <span id="navbarSelectedLanguage">EN</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                
+                <button id="mobile-menu-toggle" class="md:hidden text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="mobile-overlay hidden">
+        <div class="mobile-menu-content">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold font-playfair text-gray-800 mb-2">CODIVA</h2>
+                <p class="text-gray-600">Rest & Cafe</p>
+            </div>
+
+            <div class="lang-switcher mb-8 grid">
+                <label class="text-gray-700 font-semibold mb-3 block">Choose Language</label>
+                <button class="navbar-language-dropdown mobile" id="mobileLanguageBtn">
+                    <span id="mobileSelectedLanguage">English</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+              
+            </div>
+
+            <div class="contact-section mb-8">
+                <div class="contact-item mb-4">
+                    <i class="fas fa-phone text-green-600 text-xl mr-3"></i>
+                    <a href="tel:+9647507650999" class="text-gray-700 font-semibold text-lg hover:text-gray-600 transition-colors">
+                        +964 750 765 0999
+                    </a>
+                </div>
+                <div class="contact-item mb-4">
+                    <i class="fas fa-clock text-green-600 text-xl mr-3"></i>
+                    <span class="text-gray-700">Daily: 11:00 AM - 12:00 PM</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt text-green-600 text-xl mr-3"></i>
+                    <span class="text-gray-700">Erbil City Center, Kurdistan</span>
+                </div>
+            </div>
+
+            <div class="social-section">
+                <h3 class="text-gray-800 font-semibold mb-4 text-center">Follow Us</h3>
+                <div class="social-links-mobile">
+                    <a href="https://www.facebook.com/share/1BwN7FePRR/?mibextid=wwXIfr" class="social-link-mobile" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://www.instagram.com/codiva.co?igsh=MWFtYWpobThsZ2Zydg%3D%3D&utm_source=qr" class="social-link-mobile" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://wa.me/9647507650999" class="social-link-mobile" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="https://www.linkedin.com/company/codiva-co/" class="social-link-mobile" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                        <span>linkedin</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Navigation -->
+    <div class="category-navigation-section">
+        <div class="categories-container">
+            <div class="categories-grid">
+                <button class="category-nav-button" data-target="coldAppetizers">
+                    <div class="category-image-container">
+                        <img src="/img/cold/breackfast.jpg" alt="Breakfast" class="category-image">
+                    </div>
+                    <span class="category-name">BREAKFAST</span>
+                </button>
+                <button class="category-nav-button" data-target="appetizers">
+                    <div class="category-image-container">
+                        <img src="/img/salads/greek-salad.jpg" alt="Salads" class="category-image">
+                    </div>
+                    <span class="category-name">SALADS</span>
+                </button>
+                
+                <button class="category-nav-button" data-target="mainCourses">
+                    <div class="category-image-container">
+                        <img src="/img/hotsandwich/hot1.jpg" alt="Sandwiches" class="category-image">
+                    </div>
+                    <span class="category-name">SANDWICHES</span>
+                </button>
+                
+                <button class="category-nav-button" data-target="desserts">
+                    <div class="category-image-container">
+                        <img src="/img/desserts/tiramisu.jpg" alt="Desserts" class="category-image">
+                    </div>
+                    <span class="category-name">DESSERT</span>
+                </button>
+                
+                <button class="category-nav-button" data-target="beverages">
+                    <div class="category-image-container">
+                        <img src="/img/coffee/cappuccino.jpg" alt="Coffee" class="category-image">
+                    </div>
+                    <span class="category-name">COFFEE</span>
+                </button>
+                
+                <button class="category-nav-button" data-target="drinks">
+                    <div class="category-image-container">
+                        <img src="/img/drinks/orange.jpg" alt="Drinks" class="category-image">
+                    </div>
+                    <span class="category-name">DRINKS</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-32 pb-16">
+        <div class="container-full">
+            <div class="menu-container">
+                <section id="coldAppetizers" class="menu-section">
+                    <div class="section-header">
+                        <h2>Breakfast</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+                <section id="appetizers" class="menu-section">
+                    <div class="section-header">
+                        <h2>Salads</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+                
+                <section id="mainCourses" class="menu-section">
+                    <div class="section-header">
+                        <h2>Sandwiches</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+
+                <section id="desserts" class="menu-section">
+                    <div class="section-header">
+                        <h2>Dessert</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+
+                <section id="beverages" class="menu-section">
+                    <div class="section-header">
+                        <h2>Coffee</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+                
+                <section id="drinks" class="menu-section">
+                    <div class="section-header">
+                        <h2>Drinks</h2>
+                    </div>
+                    <div class="menu-items-grid"></div>
+                </section>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="glass-dark py-8">
+        <div class="header-container text-center">
+            <p>&copy; 2025 <a href="https://codiva.co" target="_blank" style="border-bottom: 1px; color: blue;">codiva</a>. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://www.facebook.com/share/1BwN7FePRR/?mibextid=wwXIfr" class="hover:transition-colors duration-300" target="_blank">
+                    <i class="fab fa-facebook text-2xl"></i>
+                </a>
+                <a href="https://www.instagram.com/codiva.co?igsh=MWFtYWpobThsZ2Zydg%3D%3D&utm_source=qr" class="hover: transition-colors duration-300" target="_blank">
+                    <i class="fab fa-instagram text-2xl"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/codiva-co/" class="hover: transition-colors duration-300" target="_blank">
+                    <i class="fab fa-linkedin text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="foodModal" class="food-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-image-container">
+                <img id="modalImage" src="" alt="" class="modal-image">
+            </div>
+            <div class="modal-details">
+                <h2 id="modalTitle" class="modal-title"></h2>
+                <p id="modalDescription" class="modal-description"></p>
+                <div class="modal-price-container">
+                    <span id="modalPrice" class="modal-price"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
